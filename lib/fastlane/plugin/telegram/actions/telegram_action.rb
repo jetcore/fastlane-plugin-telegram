@@ -10,6 +10,9 @@ module Fastlane
         parse_mode = params[:parse_mode]
         file_path = params[:file]
         mime_type = params[:mime_type]
+        message_thread_id = params[:message_thread_id]
+        disable_notification = params[:disable_notification]
+        protect_content = params[:protect_content]
 
         file = nil
         if file_path != nil 
@@ -42,6 +45,9 @@ module Fastlane
         { 
           "chat_id" => chat_id,
           text_parameter => text,
+          "message_thread_id" => message_thread_id,
+          "disable_notification" => disable_notification,
+          "protect_content" => protect_content,
           "parse_mode" => parse_mode,
           "document" => file
         })
@@ -84,19 +90,34 @@ module Fastlane
                                                type: String),
                    FastlaneCore::ConfigItem.new(key: :file,
                                            env_name: "TELEGRAM_FILE",
-                                         description: "File path to the file to be sent",
-                                             optional: true,
-                                                 type: String),
+                                        description: "File path to the file to be sent",
+                                           optional: true,
+                                               type: String),
                    FastlaneCore::ConfigItem.new(key: :mime_type,
                                            env_name: "TELEGRAM_FILE_MIME_TYPE",
-                                         description: "Mime type of file to be sent",
-                                             optional: true,
-                                                 type: String),
+                                        description: "Mime type of file to be sent",
+                                           optional: true,
+                                               type: String),
                    FastlaneCore::ConfigItem.new(key: :parse_mode,
                                            env_name: "TELEGRAM_PARSE_MODE",
                                         description: "Param (Markdown / HTML) for using markdown or HTML support in message",
                                            optional: true,
                                                type: String),
+                   FastlaneCore::ConfigItem.new(key: :message_thread_id,
+                                           env_name: "TELEGRAM_MESSAGE_THREAD_ID",
+                                        description: "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+                                           optional: true,
+                                               type: Integer),
+                   FastlaneCore::ConfigItem.new(key: :disable_notification,
+                                           env_name: "TELEGRAM_DISABLE_NOTIFICATION",
+                                        description: "Sends the message silently. Users will receive a notification with no sound",
+                                           optional: true,
+                                               type: Boolean),
+                   FastlaneCore::ConfigItem.new(key: :protect_content,
+                                           env_name: "TELEGRAM_PROTECT_CONTENT",
+                                        description: "Protects the contents of the sent message from forwarding and saving",
+                                           optional: true,
+                                               type: Boolean),
                    FastlaneCore::ConfigItem.new(key: :proxy,
                                            env_name: "TELEGRAM_PROXY",
                                         description: "Proxy URL to be used in network requests. Example: (https://123.45.67.89:80)",
